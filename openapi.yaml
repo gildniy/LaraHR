@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  title: 'Lara HR API'
+  contact:
+    email: gildniy05@gmail.com
+  version: 1.0.0
+paths:
+  /api/attendance/checkin:
+    post:
+      tags:
+        - Attendance
+      summary: 'Record employee checkin'
+      operationId: ecff9c87132c44f8be283e759f2b6f67
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - check_in
+                - employee_id
+              properties:
+                employee_id:
+                  type: integer
+                check_in:
+                  type: string
+                  format: date-time
+              type: object
+      responses:
+        '201':
+          description: 'Employee checkin recorded successfully'
+      security:
+        -
+          bearerAuth: []
+  /api/attendance/checkout:
+    post:
+      tags:
+        - Attendance
+      summary: 'Record employee checkout'
+      operationId: 339976e15889e813819a845e4a1a64b9
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - check_out
+                - employee_id
+              properties:
+                employee_id:
+                  type: integer
+                check_out:
+                  type: string
+                  format: date-time
+              type: object
+      responses:
+        '201':
+          description: 'Employee checkout recorded successfully'
+      security:
+        -
+          bearerAuth: []
+  /api/register:
+    post:
+      tags:
+        - Authentication
+      summary: 'Register a new user'
+      operationId: 2c76e7701b81f1a1e186ba66d91cb9ab
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - names
+                - email
+                - password
+              properties:
+                names:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              type: object
+      responses:
+        '201':
+          description: 'User registered successfully'
+  /api/login:
+    post:
+      tags:
+        - Authentication
+      summary: 'Log in user'
+      operationId: a195b6f85aa33a46df59ef92857d6cff
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+              type: object
+      responses:
+        '200':
+          description: 'User logged in successfully'
+  /api/logout:
+    post:
+      tags:
+        - Authentication
+      summary: 'Log out user'
+      operationId: d31953b2ae62b8d42064e7bdfb2405f6
+      responses:
+        '200':
+          description: 'User logged out successfully'
+      security:
+        -
+          bearerAuth: []
+  /api/forgot-password:
+    post:
+      tags:
+        - Authentication
+      summary: 'Forgot password'
+      operationId: e2deecfc81c346513df73770b0176c24
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+              type: object
+      responses:
+        '200':
+          description: 'Password reset link sent successfully'
+  /api/reset-password:
+    post:
+      tags:
+        - Authentication
+      summary: 'Reset password'
+      operationId: 4cbb669c8baa3c81c56a2cea358ee381
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+                - password_confirmation
+                - token
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+                password_confirmation:
+                  type: string
+                  format: password
+                token:
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'Password reset successfully'
+  /api/employees:
+    get:
+      tags:
+        - Employee
+      summary: 'List all employees'
+      operationId: d5c6ba15ece821651f57ba95df1bdf1e
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Employee'
+    post:
+      tags:
+        - Employee
+      summary: 'Create a new employee'
+      operationId: 04917b139a53382fe8f2f735c538b96f
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - names
+                - email
+                - employeeIdentifier
+                - phoneNumber
+              properties:
+                names:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                employeeIdentifier:
+                  type: string
+                phoneNumber:
+                  type: string
+              type: object
+      responses:
+        '201':
+          description: 'Employee created successfully'
+  '/api/employees/{id}':
+    get:
+      tags:
+        - Employee
+      summary: 'Get employee by ID'
+      operationId: 4d80ca3d4f4adf9619f2b3e68f8134c5
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Employee ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Employee details retrieved successfully'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '404':
+          description: 'Employee not found'
+    put:
+      tags:
+        - Employee
+      summary: 'Update employee'
+      operationId: f123b6b2dc276231579650d80d76e735
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Employee ID'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - names
+                - email
+                - employeeIdentifier
+                - phoneNumber
+              properties:
+                names:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                employeeIdentifier:
+                  type: string
+                phoneNumber:
+                  type: string
+              type: object
+      responses:
+        '200':
+          description: 'Employee updated successfully'
+    delete:
+      tags:
+        - Employee
+      summary: 'Delete employee'
+      operationId: 67aa6862aa92bc0d8bbff6d7cf453b2c
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Employee ID'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 'Employee deleted successfully'
+        '404':
+          description: 'Employee not found'
+components:
+  schemas:
+    Employee:
+      required:
+        - id
+        - names
+        - email
+        - employeeIdentifier
+        - phoneNumber
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        names:
+          type: string
+          example: 'John Doe'
+        email:
+          type: string
+          format: email
+          example: john@example.com
+        employeeIdentifier:
+          type: string
+          example: EMP001
+        phoneNumber:
+          type: string
+          example: '123456789'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      type: object
