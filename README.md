@@ -47,15 +47,7 @@ This project implements several features including a full authentication system,
     php artisan key:generate
     ```
 
-6. Configure the database connection in the `.env` file:
-    ```plaintext
-    DB_CONNECTION=mysql
-    DB_HOST=mysql
-    DB_PORT=3306
-    DB_DATABASE=your_database_name
-    DB_USERNAME=sail
-    DB_PASSWORD=password
-    ```
+6. Copy the content of the `.env.example` file to the `.env`
 
 7. Migrate the database:
     ```bash
