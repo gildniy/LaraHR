@@ -47,7 +47,7 @@ This project implements several features including a full authentication system,
     php artisan key:generate
     ```
 
-6. Copy the content of the `.env.example` file to the `.env`
+6. Copy the content of the `.env.example` file to the `.env`.
 
 7. Migrate the database:
     ```bash
